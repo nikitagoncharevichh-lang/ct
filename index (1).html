@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Times VC — Стратегический обзор</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F5F0E8;
+  --bg-card: #FFFFFF;
+  --bg-card-alt: #FAF7F2;
+  --bg-highlight: #FFF8F0;
+  --accent: #C75B2A;
+  --accent-light: #E8A87C;
+  --accent-dark: #A04520;
+  --text-primary: #2C2418;
+  --text-secondary: #6B5E4F;
+  --text-muted: #9B8E7E;
+  --border: #E5DDD2;
+  --border-light: #EDE8E0;
+  --green: #2A8C5A;
+  --green-bg: #E8F5EE;
+  --red: #C4453A;
+  --red-bg: #FFF0EE;
+  --blue: #3B6BA5;
+  --blue-bg: #EEF3FA;
+  --shadow-sm: 0 1px 3px rgba(44,36,24,0.06);
+  --shadow-md: 0 4px 16px rgba(44,36,24,0.08);
+  --shadow-lg: 0 8px 32px rgba(44,36,24,0.10);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font: 'Inter', -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.3s ease;
+}
+
+.navbar.scrolled { box-shadow: var(--shadow-sm); }
+
+.navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  gap: 8px;
+}
+
+.nav-logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+  margin-right: 32px;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  overflow-x: auto;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+  background: rgba(199,91,42,0.06);
+}
+
+.nav-links a.active {
+  color: var(--accent);
+  background: rgba(199,91,42,0.08);
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 14px; right: 14px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ========== MAIN CONTAINER ========== */
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px 60px;
+}
+
+/* ========== SECTION ========== */
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section:last-child { border-bottom: none; }
+
+.section-header {
+  margin-bottom: 48px;
+}
+
+.section-number {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-number::before {
+  content: '';
+  width: 20px; height: 2px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 700px;
+}
+
+/* ========== KPI CARDS ========== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.kpi-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.kpi-value {
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-context {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.kpi-context .positive { color: var(--green); font-weight: 600; }
+.kpi-context .negative { color: var(--red); font-weight: 600; }
+
+/* ========== SUBSECTION ========== */
+.subsection {
+  margin-bottom: 48px;
+}
+
+.subsection-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subsection-title::before {
+  content: '■';
+  font-size: 10px;
+}
+
+/* ========== FORECAST CARDS ========== */
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.forecast-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 28px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.forecast-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.forecast-card-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.tag-consensus { background: var(--green-bg); color: var(--green); }
+.tag-drivers { background: var(--blue-bg); color: var(--blue); }
+.tag-risks { background: var(--red-bg); color: var(--red); }
+
+.forecast-card h4 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.forecast-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.forecast-card li {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  padding: 4px 0 4px 16px;
+  position: relative;
+}
+
+.forecast-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.forecast-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+/* ========== CHART SECTION ========== */
+.chart-container {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* region detail cards under chart */
+.region-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.region-detail {
+  background: var(--bg-card-alt);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  cursor: default;
+  transition: all 0.2s ease;
+}
+
+.region-detail:hover {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.region-detail-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.region-detail-stats {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ========== CEE COUNTRY CARDS ========== */
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.country-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 28px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.country-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.country-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+}
+
+.country-card.poland::before { background: #DC143C; }
+.country-card.ukraine::before { background: #0057B8; }
+.country-card.estonia::before { background: #0072CE; }
+.country-card.czech::before { background: #11457E; }
+.country-card.romania::before { background: #002B7F; }
+
+.country-flag {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.country-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.country-metric {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.country-details {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.country-details strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.country-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.country-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+
+/* ========== STRUCTURAL FEATURES ========== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.feature-item {
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  padding: 20px 22px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.feature-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.feature-item strong {
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.feature-item p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ========== HIGHLIGHT BOX ========== */
+.highlight-box {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  border-radius: var(--radius);
+  padding: 32px 36px;
+  color: #FFF;
+  box-shadow: var(--shadow-lg);
+}
+
+.highlight-box .highlight-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.highlight-box p {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ========== SOURCES ========== */
+.sources {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.sources-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.sources a {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sources a:hover { color: var(--accent); text-decoration: underline; }
+
+.sources span { font-size: 12px; color: var(--border); margin: 0 6px; }
+
+/* ========== NAV BUTTONS ========== */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0 20px;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.nav-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.nav-btn.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ========== ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .forecast-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .country-grid { grid-template-columns: 1fr; }
+  .navbar-inner { padding: 0 16px; }
+  .nav-logo { margin-right: 16px; }
+  .main { padding: 70px 16px 40px; }
+  .section { padding: 40px 0; }
+}
+
+@media (max-width: 600px) {
+  .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi-card { padding: 20px 16px; }
+  .kpi-value { font-size: 32px; }
+  .nav-links a { font-size: 12px; padding: 6px 10px; }
+  .nav-logo { font-size: 15px; margin-right: 12px; }
+  .chart-container { padding: 20px 14px; }
+  .forecast-card { padding: 22px; }
+  .country-card { padding: 22px; }
+  .highlight-box { padding: 24px; }
+  .highlight-box p { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <div class="nav-logo">Capital Times</div>
+    <ul class="nav-links">
+      <li><a href="#global" class="active">Глобальный VC рынок</a></li>
+      <li><a href="#cee">CEE регион</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== MAIN ========== -->
+<div class="main">
+
+  <!-- ==================== SECTION 1: GLOBAL VC MARKET ==================== -->
+  <section class="section" id="global">
+    <div class="section-header reveal">
+      <div class="section-number">Раздел 01</div>
+      <h1 class="section-title">Глобальный VC рынок: итоги 2025</h1>
+      <p class="section-subtitle">Рынок восстановился. Капитал концентрируется в&nbsp;AI и&nbsp;у&nbsp;крупных фондов.</p>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card reveal reveal-delay-1">
+        <div class="kpi-label">Global VC 2025</div>
+        <div class="kpi-value">$427B</div>
+        <div class="kpi-context"><span class="positive">+30% YoY</span> — Crunchbase</div>
+      </div>
+      <div class="kpi-card reveal reveal-delay-2">
+        <div class="kpi-label">Доля AI</div>
+        <div class="kpi-value">61%</div>
+        <div class="kpi-context">$258.7B — рекорд (OECD)</div>
+      </div>
+      <div class="kpi-card reveal reveal-delay-3">
+        <div class="kpi-label">Secondaries</div>
+        <div class="kpi-value">$240B</div>
+        <div class="kpi-context"><span class="positive">+48% YoY (Jefferies)</span></div>
+      </div>
+      <div class="kpi-card reveal reveal-delay-4">
+        <div class="kpi-label">M&A exits</div>
+        <div class="kpi-value">#1</div>
+        <div class="kpi-context">M&A — рекордный год. IPO recovering</div>
+      </div>
+    </div>
+
+    <!-- Forecast -->
+    <div class="subsection">
+      <div class="subsection-title reveal">Прогноз 2026–2027</div>
+      <div class="forecast-grid">
+        <div class="forecast-card reveal reveal-delay-1">
+          <div class="forecast-card-tag tag-consensus">Consensus</div>
+          <h4>$470–530B</h4>
+          <p>+10–25% YoY. Crunchbase, Wellington, KPMG — рост продолжится, но&nbsp;умереннее.</p>
+        </div>
+        <div class="forecast-card reveal reveal-delay-2">
+          <div class="forecast-card-tag tag-drivers">Драйверы роста</div>
+          <ul>
+            <li>AI mature-stage раунды (2022–23 seeds → Series B/C)</li>
+            <li>IPO pipeline: 200+ компаний</li>
+            <li>Цикл снижения ставок ФРС</li>
+            <li>M&A продолжит доминировать</li>
+          </ul>
+        </div>
+        <div class="forecast-card reveal reveal-delay-3">
+          <div class="forecast-card-tag tag-risks">Риски</div>
+          <ul>
+            <li>Тарифы США (+27% avg) ломают cross-border модели</li>
+            <li>AI bubble: 95% деплоев без P&L impact</li>
+            <li>Fundraising для GP на&nbsp;минимуме с&nbsp;2017</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Regional Breakdown -->
+    <div class="subsection">
+      <div class="subsection-title reveal">Разбивка по регионам</div>
+      <div class="chart-container reveal">
+        <div class="chart-wrapper">
+          <canvas id="regionChart" height="260"></canvas>
+        </div>
+        <div class="region-details">
+          <div class="region-detail">
+            <div class="region-detail-name">🇺🇸 США — $274B (64%)</div>
+            <div class="region-detail-stats"><span style="color:var(--green);font-weight:600;">+27% YoY</span> · AI mega-rounds. 75% глобального AI VC (OECD). OpenAI ($40B), SpaceX ($800B val)</div>
+          </div>
+          <div class="region-detail">
+            <div class="region-detail-name">🇨🇳 Китай — $85B (~20%)</div>
+            <div class="region-detail-stats">Volatile · Deep tech: AI, autonomous, semis. Геополитика</div>
+          </div>
+          <div class="region-detail">
+            <div class="region-detail-name">🇪🇺 Европа — $77B (18%)</div>
+            <div class="region-detail-stats"><span style="color:var(--green);font-weight:600;">+7% YoY</span> · $13–17B/кв. Defence 3.4x. Доля: 16%→11% из-за US AI surge</div>
+          </div>
+          <div class="region-detail">
+            <div class="region-detail-name">🇮🇳 Индия — $42B (~10%)</div>
+            <div class="region-detail-stats"><span style="color:var(--green);font-weight:600;">+15% YoY</span> · SaaS + fintech hub. Fastest growing CAGR</div>
+          </div>
+          <div class="region-detail">
+            <div class="region-detail-name">🌏 Остальные — ~$23B (~5%)</div>
+            <div class="region-detail-stats">SE Asia $6.8B (+14%), Singapore = 92% доли</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources reveal">
+      <div class="sources-label">Источники</div>
+      <a href="https://news.crunchbase.com/venture/" target="_blank" rel="noopener">Crunchbase</a>
+      <span>·</span>
+      <a href="https://www.oecd.org/en/publications/oecd-entrepreneurship-financing-data-2025_a206e6ab-en.html" target="_blank" rel="noopener">OECD</a>
+      <span>·</span>
+      <a href="https://corpgov.law.harvard.edu/2025/02/20/state-of-venture-2024/" target="_blank" rel="noopener">Wellington / Harvard Law</a>
+      <span>·</span>
+      <a href="https://kpmg.com/xx/en/our-insights/esg/venture-pulse.html" target="_blank" rel="noopener">KPMG Q3'25</a>
+      <span>·</span>
+      <a href="https://www.spglobal.com/market-intelligence/en/" target="_blank" rel="noopener">S&P Global</a>
+    </div>
+
+    <!-- Nav buttons -->
+    <div class="nav-buttons">
+      <span class="nav-btn disabled">← НАЗАД</span>
+      <a href="#cee" class="nav-btn">ДАЛІ →</a>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2: CEE REGION ==================== -->
+  <section class="section" id="cee">
+    <div class="section-header reveal">
+      <div class="section-number">Раздел 02</div>
+      <h1 class="section-title">VC в&nbsp;регионе CEE</h1>
+      <p class="section-subtitle">€3.6B в 2025&nbsp;|&nbsp;1,034 сделки&nbsp;|&nbsp;5.5% от&nbsp;европейского VC&nbsp;|&nbsp;Рекалибрация, не&nbsp;спад</p>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card reveal reveal-delay-1">
+        <div class="kpi-label">CEE VC 2025</div>
+        <div class="kpi-value">€3.6B</div>
+        <div class="kpi-context">1,034 сделки</div>
+      </div>
+      <div class="kpi-card reveal reveal-delay-2">
+        <div class="kpi-label">Pre-seed рост</div>
+        <div class="kpi-value">+45%</div>
+        <div class="kpi-context">avg размер раунда YoY</div>
+      </div>
+      <div class="kpi-card reveal reveal-delay-3">
+        <div class="kpi-label">Seed рост</div>
+        <div class="kpi-value">+43%</div>
+        <div class="kpi-context">avg размер раунда YoY</div>
+      </div>
+      <div class="kpi-card reveal reveal-delay-4">
+        <div class="kpi-label">AI доля</div>
+        <div class="kpi-value">43%</div>
+        <div class="kpi-context">лидирующий сектор</div>
+      </div>
+    </div>
+
+    <!-- Country Cards -->
+    <div class="subsection">
+      <div class="subsection-title reveal">Лидеры региона</div>
+      <div class="country-grid">
+        <div class="country-card poland reveal reveal-delay-1">
+          <div class="country-flag">🇵🇱</div>
+          <div class="country-name">Польша</div>
+          <div class="country-metric">€240M</div>
+          <div class="country-details">
+            Equity <strong>+62.5% YoY</strong>. ElevenLabs (€156M Series C), Spacelift, Nomagic. PFR Ventures: €62M в&nbsp;4&nbsp;новых фонда. <strong>74 сделки в H1</strong> — #1 по&nbsp;активности.
+          </div>
+          <div class="country-highlights">
+            <span class="country-tag">AI / Voice</span>
+            <span class="country-tag">DevOps</span>
+            <span class="country-tag">Robotics</span>
+          </div>
+        </div>
+        <div class="country-card ukraine reveal reveal-delay-2">
+          <div class="country-flag">🇺🇦</div>
+          <div class="country-name">Украина</div>
+          <div class="country-metric">$498M</div>
+          <div class="country-details">
+            +8% YoY (AVentures DealBook). Defence Tech: $129M (+119% YoY). AI-стартапы: ~$302M. Ukraine Phoenix Tech Fund (€50M, EIB + Bpifrance). <strong>Capital efficiency advantage</strong>.
+          </div>
+          <div class="country-highlights">
+            <span class="country-tag">Defence Tech</span>
+            <span class="country-tag">Fintech</span>
+          </div>
+        </div>
+        <div class="country-card estonia reveal reveal-delay-3">
+          <div class="country-flag">🇪🇪</div>
+          <div class="country-name">Эстония</div>
+          <div class="country-metric">38 сделок</div>
+          <div class="country-details">
+            H1 — #2 по&nbsp;активности. Cast.AI (€95.5M) — литовско-эстонский лидер. <strong>Сильный AI/deep tech кластер</strong>.
+          </div>
+          <div class="country-highlights">
+            <span class="country-tag">AI Infra</span>
+            <span class="country-tag">Deep Tech</span>
+          </div>
+        </div>
+        <div class="country-card czech reveal reveal-delay-4">
+          <div class="country-flag">🇨🇿</div>
+          <div class="country-name">Чехия</div>
+          <div class="country-metric">Mews €64.1M</div>
+          <div class="country-details">
+            Крупнейший «настоящий» CEE-раунд года. <strong>Hospitality tech</strong>. 17 сделок в&nbsp;H1.
+          </div>
+          <div class="country-highlights">
+            <span class="country-tag">Hospitality</span>
+            <span class="country-tag">SaaS</span>
+          </div>
+        </div>
+        <div class="country-card romania reveal reveal-delay-1">
+          <div class="country-flag">🇷🇴</div>
+          <div class="country-name">Румыния</div>
+          <div class="country-metric">€103M</div>
+          <div class="country-details">
+            40 транзакций, <span style="color:var(--red);font-weight:600;">-20% YoY</span>. Druid AI (€27.5M Series C), Digitail (€20M). <strong>Avg seed: €1.5M</strong>.
+          </div>
+          <div class="country-highlights">
+            <span class="country-tag">Conversational AI</span>
+            <span class="country-tag">Pet Tech</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Structural Features -->
+    <div class="subsection">
+      <div class="subsection-title reveal">Структурные особенности</div>
+      <div class="features-grid">
+        <div class="feature-item reveal reveal-delay-1">
+          <p><strong>Рекалибрация, не спад:</strong> объём стабилен, deals count снизился — капитал в&nbsp;меньшем числе компаний</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-2">
+          <p><strong>AI доминирует:</strong> 43.2% funding. ElevenLabs, Cast.AI — unicorn-track</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-1">
+          <p><strong>Вертикали:</strong> Enterprise Software (€720M), Fintech (€522M), Space (€350M), Defence</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-2">
+          <p><strong>Early-stage rounds растут:</strong> pre-seed +45%, seed +43% — при меньшем числе сделок</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-1">
+          <p><strong>Топ-5 стран = 60%+</strong> инвестиций. Длинный хвост рынков</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-2">
+          <p><strong>EBRD:</strong> >€1B в 30+ VC/PE фондов CEE. Институционализация</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-1">
+          <p><strong>Structural gap:</strong> Series B/C — bottleneck. Компании уезжают</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-2">
+          <p><strong>Cap markets CEE = 35% GDP</strong> (vs 100%+ developed). MoU 8 стран для trading hub</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Highlight Box -->
+    <div class="highlight-box reveal">
+      <div class="highlight-label">Relevance для CT VC</div>
+      <p>CEE — mispriced рынок с&nbsp;talent advantage и&nbsp;capital efficiency. Defence + AI — пересечение с&nbsp;core вертикалями фонда.</p>
+    </div>
+
+    <!-- Sources -->
+    <div class="sources reveal">
+      <div class="sources-label">Источники</div>
+      <a href="https://howtoweb.co/" target="_blank" rel="noopener">How to Web / Recursive</a>
+      <span>·</span>
+      <a href="https://inventure.com.ua/" target="_blank" rel="noopener">InVenture</a>
+      <span>·</span>
+      <a href="https://sifted.eu/" target="_blank" rel="noopener">Sifted</a>
+      <span>·</span>
+      <a href="https://www.eib.org/en/press/all/2025-087-eib-group-and-bpifrance-support-growth-of-ukraine-s-tech-sector-with-eur50-million-initiative" target="_blank" rel="noopener">EIB / UPTF</a>
+      <span>·</span>
+      <a href="https://www.ebrd.com/news/2024/ebrd-launches-blue-europe-to-deepen-central-and-eastern-european-capital-markets.html" target="_blank" rel="noopener">EBRD / Blue Europe</a>
+    </div>
+
+    <!-- Nav buttons -->
+    <div class="nav-buttons">
+      <a href="#global" class="nav-btn">← НАЗАД</a>
+      <span class="nav-btn disabled">ДАЛІ →</span>
+    </div>
+  </section>
+
+</div><!-- /main -->
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// ===== IntersectionObserver for reveal animations =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===== Navbar scroll shadow & active section highlight =====
+const navbar = document.getElementById('navbar');
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+function updateNav() {
+  // Shadow
+  navbar.classList.toggle('scrolled', window.scrollY > 10);
+
+  // Active section
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 120;
+    if (window.scrollY >= top) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+
+// ===== Chart.js — Regional Breakdown =====
+const ctx = document.getElementById('regionChart').getContext('2d');
+
+// Register plugin for bar labels
+const barLabelPlugin = {
+  id: 'barLabels',
+  afterDatasetsDraw(chart) {
+    const meta = chart.getDatasetMeta(0);
+    const ctx = chart.ctx;
+    meta.data.forEach((bar, i) => {
+      const dataset = chart.data.datasets[0];
+      const value = dataset.data[i];
+      const label = chart.data.labels[i];
+      const share = ['64%', '~20%', '18%', '~10%', '~5%'][i];
+
+      ctx.save();
+      ctx.textBaseline = 'middle';
+      ctx.font = '600 13px Inter, sans-serif';
+      ctx.fillStyle = '#2C2418';
+      ctx.fillText('$' + value + 'B', bar.x + 12, bar.y);
+
+      ctx.font = '400 11px Inter, sans-serif';
+      ctx.fillStyle = '#9B8E7E';
+      ctx.fillText(share, bar.x + 12 + ctx.measureText('$' + value + 'B  ').width + 4, bar.y);
+      ctx.restore();
+    });
+  }
+};
+
+const regionChart = new Chart(ctx, {
+  type: 'bar',
+  plugins: [barLabelPlugin],
+  data: {
+    labels: ['США', 'Китай', 'Европа', 'Индия', 'Остальные'],
+    datasets: [{
+      data: [274, 85, 77, 42, 23],
+      backgroundColor: [
+        '#C75B2A',
+        '#E8A87C',
+        '#A04520',
+        '#D4845A',
+        '#C9B99A'
+      ],
+      borderRadius: 6,
+      borderSkipped: false,
+      barPercentage: 0.65,
+      categoryPercentage: 0.75
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: { right: 80, top: 8, bottom: 8 }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#2C2418',
+        titleFont: { family: 'Inter', size: 13, weight: '600' },
+        bodyFont: { family: 'Inter', size: 12 },
+        padding: 12,
+        cornerRadius: 8,
+        callbacks: {
+          label: function(context) {
+            return '$' + context.parsed.x + 'B';
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        display: false,
+        max: 340
+      },
+      y: {
+        grid: { display: false },
+        border: { display: false },
+        ticks: {
+          font: { family: 'Inter', size: 14, weight: '600' },
+          color: '#2C2418',
+          padding: 8
+        }
+      }
+    },
+    animation: {
+      duration: 1200,
+      easing: 'easeOutQuart'
+    }
+  }
+});
+
+// Make chart canvas height responsive
+function resizeChart() {
+  const wrapper = document.querySelector('.chart-wrapper');
+  const canvas = document.getElementById('regionChart');
+  const isMobile = window.innerWidth < 600;
+  canvas.style.height = isMobile ? '200px' : '260px';
+  regionChart.resize();
+}
+resizeChart();
+window.addEventListener('resize', resizeChart);
+</script>
+
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
